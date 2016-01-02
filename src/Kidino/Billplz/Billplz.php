@@ -43,7 +43,6 @@ class Billplz {
 	function get_bill( $bill_id ){
 		$this->ch = curl_init($this->host . $this->sep . $this->end_bills . $this->sep . $bill_id);
 		return $this->_run();
-		return false;
 	}
 
 	function delete_bill( $bill_id ){
@@ -63,6 +62,11 @@ class Billplz {
 	}
 
 	function _run(){
+        if ($this->api_key == '') {
+            $this->error = 'API key was not set';
+            return false;
+        }
+
 		curl_setopt($this->ch, CURLOPT_HEADER, 1);
 		curl_setopt($this->ch, CURLOPT_USERPWD, $this->api_key . ":");
 		curl_setopt($this->ch, CURLOPT_TIMEOUT, 30);

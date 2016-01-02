@@ -1,6 +1,16 @@
 {
     "name": "kidino/billplz",
-    "autoload": {
+    "description": "PHP library for BillPlz API, Malaysia's online payment",
+    "keywords": ["billplz", "malaysia", "api"],
+    "homepage": "https://github.com/kidino/billplz",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Iszuddin Ismail",
+            "email": "dino@websegera.my"
+        }
+    ],
+	"autoload": {
         "psr-0" : {
             "Kidino\\Billplz" : "src"
         }
