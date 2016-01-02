@@ -4,6 +4,16 @@ This is a simple library for working with Malaysia's BillPlz online payment. Be 
 
 https://billplz.com/api
 
+## Installation
+
+### Composer
+
+```composer require kidino/billplz```
+
+### Github
+
+Just download any of the release or clone this repository. You may need to manage how you load the library with namespacing yourself.
+
 ## How to use
 
 ### Create New Collection
