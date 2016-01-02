@@ -1,0 +1,8 @@
+{
+    "name": "kidino/billplz",
+    "autoload": {
+        "psr-0" : {
+            "Kidino\\Billplz" : "src"
+        }
+    }
+}
