@@ -11,7 +11,7 @@ https://billplz.com/api
 Be sure that you save the result. Result you get the is normal Curl result.
 
 ```php
-use Kidino\Billplz;
+use Kidino\Billplz\Billplz;
 
 $bplz = new Billplz(array('api_key' => 'your api key'));
 $bplz->set_data('title','Home Tutoring');
@@ -26,7 +26,7 @@ $bplz_result = json_decode($rbody);
 Please note that you can also use `set_data()` with an array instead of two parameters.
 
 ```php
-use Kidino\Billplz;
+use Kidino\Billplz\Billplz;
 
 $bplz = new Billplz(array('api_key' => 'your api key'));
 $bplz->set_data(array(
@@ -47,7 +47,7 @@ $bplz_result = json_decode($rbody);
 ### Get Bill Details
 
 ```php
-use Kidino\Billplz;
+use Kidino\Billplz\Billplz;
 
 $bplz = new Billplz(array('api_key' => 'your api key'));
 $result = $bplz->get_bill( 'your bill id' );
@@ -58,7 +58,7 @@ $bplz_result = json_decode($rbody);
 ### Delete Bill
 
 ```php
-use Kidino\Billplz;
+use Kidino\Billplz\Billplz;
 
 $bplz = new Billplz(array('api_key' => 'your api key'));
 $result = $bplz->delete_bill( 'your bill id' );
