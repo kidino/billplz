@@ -9,7 +9,8 @@ class Billplz {
 	private $api_key = '';
 	private $ch;
 	private $sep = '/';
-
+	private $sslFlag  = FALSE;
+	private $certPath = NULL;
 	private $end_bills = 'bills';
 	private $end_collections = 'collections';
 
@@ -18,6 +19,10 @@ class Billplz {
 			if (isset($data['api_key'])) $this->api_key = $data['api_key'];
 			if (isset($data['host'])) $this->host = $data['host'];
 		}
+	}
+
+	function  errorMessage() {
+		return $this->error;
 	}
 
 	function create_collection(){
@@ -33,6 +38,13 @@ class Billplz {
 		}
 
 		return $this->_run();
+	}
+
+	function set_ssl( $flag = TRUE, $certPath = NULL ) {		
+		
+		$this->sslFlag  = $flag;
+		$this->certPath = $certPath;
+		
 	}
 
 	function create_bill(){
@@ -62,9 +74,30 @@ class Billplz {
 	}
 
 	function _run(){
+		
         if ($this->api_key == '') {
             $this->error = 'API key was not set';
             return false;
+        }
+
+        if ( $this->sslFlag && $this->sslFlag == TRUE ) {
+
+        	if ( $this->certPath == NULL ) {
+				$this->error = "Error : Certificate path must be provided, missing parameter 2, expecting path null was given on method set_ssl(TRUE, NULL)";
+				return false;
+			}
+
+			if ( !file_exists( $this->certPath ) ) {
+				$this->error = "Error : Certificate file not found in ".$this->certPath;
+				return false;				
+			}
+			else {
+				curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $this->sslFlag );
+				curl_setopt($this->ch, CURLOPT_CAINFO, $this->certPath );
+			}	
+        }
+        else {
+        	curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, FALSE );
         }
 
 		curl_setopt($this->ch, CURLOPT_HEADER, 1);
