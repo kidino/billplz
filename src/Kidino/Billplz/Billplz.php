@@ -19,20 +19,43 @@ class Billplz {
 			if (isset($data['host'])) $this->host = $data['host'];
 		}
 	}
-
-	function  errorMessage() {
-		return $this->error;
-	}
-
+	
 	function create_collection(){
 		$this->ch = curl_init($this->host . $this->sep . $this->end_collections);
 
 		if (isset($this->data['logo'])) {
-			if (file_exists($this->data['logo'])) {
-				$this->data['logo'] = '@'. $this->data['logo'];
-			} else {
+
+			if (!file_exists($this->data['logo'])) {
+
 				$this->error = "logo file not found";
 				return false;
+
+			}
+			// check for class CurlFile exist or not
+			// as for php version of 5.6 >, the option CURLOPT_SAFE_UPLOAD
+			// was set to true, and below than that is false
+			// true means, its prevent @ prefix from working for security reason
+			// to handler this problem, as of php start from 5.6 >, need to use
+			// CurlFile class for file uploading together with 
+			// CURLOPT_SAFE_UPLOAD which set to true.
+			// ------------------------------------------
+			// As PHP version below than mentioned version above, just fallback to the original method
+			// which is by using @ prefix and set 
+			// this opt CURLOPT_SAFE_UPLOAD to false(optional as the default value is false)
+			if ( class_exists('CurlFile', false ) ) {
+				// getting mime type for uploaded files
+				$finfo = finfo_open( FILEINFO_MIME_TYPE );
+				$mimeType = finfo_file($finfo, $this->data['logo']);
+				finfo_close($finfo);
+				$fileUpload = new \CURLFile( $this->data['logo'], $mimeType,'logo' );
+				$this->data['logo'] = $fileUpload;
+
+			}
+			else {
+				// fallback to the original method
+				$this->data['logo'] = '@'.$this->data['logo'];
+				curl_setopt( $this->ch, CURLOPT_SAFE_UPLOAD, FALSE );
+
 			}
 		}
 
