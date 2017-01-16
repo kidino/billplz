@@ -46,6 +46,7 @@ $bplz->set_data(array(
 	'name' => "Jone Doe",
 	'due_at' => "2016-1-1",
 	'amount' => 2000, // RM20
+	'description' => 'Payment Description',
 	'callback_url' => "http://yourwebsite.com/return_url"
 ));
 
