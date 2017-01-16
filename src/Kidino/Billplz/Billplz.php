@@ -4,7 +4,7 @@ namespace Kidino\Billplz;
 
 class Billplz {
 
-	private $host = 'https://www.billplz.com/api/v2';
+	private $host = 'https://www.billplz.com/api/v3';
 	private $data = array();
 	private $api_key = '';
 	private $ch;
